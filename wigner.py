@@ -3,15 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as tick
 import matplotlib.colors as mcolors 
-def plot_wigner(rho,sparse=False,dim=2,file: str = None):
-    x,y,z = wigner(rho,sparse)
+def plot_wigner(rho,sparse=False,dim=2,file: str = None,axis_min= -6, axis_max= 6, axis_nums= 200):
+    x,y,z = wigner(rho,sparse,axis_min, axis_max, axis_nums)
     if dim==2:
         plot2d(x,y,z,file=file)
     if dim==3:
         plot3d(x,y,z,file=file)
 
 
-def wigner(rho,sparse=False, axes_min= -6, axes_max= 6, axes_steps= 200):
+def wigner(rho,sparse=False, axis_min= -6, axis_max= 6, axis_nums= 200):
     ''' method : string {'clenshaw', 'iterative', 'laguerre', 'fft'}
         Select method 'clenshaw' 'iterative', 'laguerre', or 'fft', where 'clenshaw' 
         and 'iterative' use an iterative method to evaluate the Wigner functions for density
@@ -25,7 +25,7 @@ def wigner(rho,sparse=False, axes_min= -6, axes_max= 6, axes_steps= 200):
         (>~50). 'clenshaw' is a fast and numerically stable method.'''
 
 
-    xvec = np.linspace(axes_min, axes_max, axes_steps)
+    xvec = np.linspace(axis_min, axis_max, axis_nums)
     wigner_data = qtp.wigner(psi=qtp.Qobj(rho),xvec= xvec,yvec= xvec,g=2,method='clenshaw',sparse=sparse)
     return xvec,xvec, wigner_data
 

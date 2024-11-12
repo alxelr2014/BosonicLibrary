@@ -59,7 +59,7 @@ def partial_thermal_channel(rho,sigma,cutoff):
     cutoffs= np.concatenate((np.array([rho.form[1]]), cutoff_env))
 
     unitary = sp.sparse.kron(np.eye(rho.form[0]), thermal_unitary_operator(sigma,cutoffs))
-    ancilla = DensityOperator.fock_list([0,0],cutoff_env)  
+    ancilla = DensityOperator.fock([0,0],cutoff_env)  
     rho_in = DensityOperator.kron(rho,ancilla)
     rho_in.evolve(unitary)
     rho_out = rho_in.partial_trace([2,3])
